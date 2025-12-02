@@ -38,6 +38,19 @@ Players assume the role of European settlers arriving in North America during th
 - **Environmental Hazards:** Weather effects, wildlife encounters, seasonal changes
 - **Rest and Recovery:** Camps, settlements, and safe havens
 
+### Hydrology System
+- **Water Sources:** Dynamic rivers, lakes, streams, and tributaries generated procedurally
+- **Water Flow and Drainage:** Realistic water pathways following terrain elevation with GPU-computed flow simulation
+- **Water Mechanics:**
+  - Water availability for drinking and resource gathering
+  - Seasonal water level fluctuations affecting traversal and fishing
+  - Flash floods and flooding hazards during heavy rainfall
+  - Water crossing mechanics (fording, building bridges, finding shallows)
+- **Water Quality:** Fresh vs. stagnant water, pollution from settlements and industrial activities
+- **Fishing and Aquatic Resources:** Fish populations, beaver trapping, aquatic plant gathering
+- **Hydrological Features:** Waterfalls, rapids, wetlands, springs with distinct gameplay mechanics
+- **Dynamic Water Simulation:** GPU-accelerated water flow computation for realistic environmental behavior
+
 ### Skill Progression System
 - **0-100 Scaling:** Skills improve through practice with diminishing returns
 - **Core Skills:**
@@ -57,9 +70,10 @@ Players assume the role of European settlers arriving in North America during th
 
 ### Exploration and World Generation
 - **Procedural Terrain:** Biomes include forests, plains, mountains, rivers, lakes
-- **Point of Interest Generation:** Historical sites, settlements, ruins, wildlife hotspots
-- **Dynamic Events:** Random encounters, seasonal migrations, historical events
-- **Navigation:** Map system with landmarks and trail markers
+- **Hydrological Generation:** Procedurally generated water systems with realistic drainage patterns and seasonal behavior
+- **Point of Interest Generation:** Historical sites, settlements, ruins, wildlife hotspots, fishing grounds, fords, and water sources
+- **Dynamic Events:** Random encounters, seasonal migrations, historical events, flooding events
+- **Navigation:** Map system with landmarks and trail markers including water crossings and water features
 
 ## Character Creation and Progression
 
@@ -153,6 +167,7 @@ Players assume the role of European settlers arriving in North America during th
 - **Real-Time Generation:** Infinite world generation with streaming chunks computed entirely on GPU
 - **LOD System:** GPU-driven Level of Detail system for terrain and mesh complexity scaling
 - **Dynamic Texturing:** Shader-based terrain texturing using noise patterns and material blending
+- **Hydrology Simulation:** GPU-computed water flow algorithms for realistic river generation, drainage basins, and water level determination
 - **GPU Mandate:** GPU compute support is required to run the game - CPU-only systems cannot play this game
 - **Performance Benefit:** GPU acceleration provides seamless world generation with no CPU bottlenecks
 
@@ -165,9 +180,14 @@ Players assume the role of European settlers arriving in North America during th
 - 2D sprite rendering pipeline in 3D space (GridMap setup)
 - Basic character movement and sprite positioning
 - Initial UI framework adapted for 3D viewport
+- Hydrology system foundation: water data structures and basic rendering
 
 ### Phase 2: Core Gameplay (Months 4-8)
 - Advanced GPU shader development (biome generation, noise combinations)
+- GPU-based water flow simulation and river generation
+- Water quality mechanics and seasonal water level fluctuations
+- Fishing mechanics and aquatic resource gathering
+- Hydrology-based point-of-interest generation (fords, fishing grounds, water sources)
 - Skill progression system
 - Social interaction mechanics
 - Quest and narrative framework
@@ -176,9 +196,12 @@ Players assume the role of European settlers arriving in North America during th
 
 ### Phase 3: World Building (Months 9-12)
 - Expanded GPU-accelerated world generation with streaming and culling
+- Advanced hydrology features: waterfalls, rapids, wetlands, springs, flood events
+- Water crossing mechanics: fording, bridge-building, finding shallow passages
+- Settlement water dependency systems and pollution mechanics
 - Settlement systems with GPU-driven placement and rendering
 - Cultural faction mechanics
-- GPU particle effects for weather, fire, and environmental effects
+- GPU particle effects for weather, fire, water, and environmental effects
 - Audio implementation
 - Optimized terrain LOD and chunk generation pipeline
 
@@ -242,10 +265,11 @@ Harsh World represents an ambitious vision for historical simulation gaming, com
 
 ---
 
-**Document Version:** 2.0
+**Document Version:** 2.1
 **Last Updated:** December 2, 2025
 **Author:** BMAD Product Management Team
 
 ### Version History
+- **v2.1:** Added comprehensive hydrology system to development scope, including GPU-computed water flow simulation, water mechanics, fishing systems, and hydrology-related point-of-interest generation integrated throughout the development roadmap
 - **v2.0:** Updated architecture to use Godot 3D Engine with GPU-accelerated procedural generation, 2D sprites in 3D space with GridMap system, and shader-based terrain and noise calculations
 - **v1.0:** Original 2D top-down design with CPU-based procedural generation
