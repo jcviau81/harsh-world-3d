@@ -1,0 +1,39 @@
+[gd_resource type="TileSet" load_steps=4 format=3 uid="uid://byo2csvuhvi4a"]
+
+[ext_resource type="Texture2D" uid="uid://dax8dsya1lr21" path="res://assets/sprites/vegetation/trees/poplar/poplar.png" id="1_jf1py"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_lj2i4"]
+resource_name = "wood"
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_83ykl"]
+texture = ExtResource("1_jf1py")
+texture_region_size = Vector2i(128, 128)
+use_texture_padding = false
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 48)
+0:0/0/y_sort_origin = 15
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 7, 0, 7, 0, 16, -10, 16)
+0:0/0/custom_data_0 = "Poplar Tree"
+1:0/0 = 0
+1:0/0/texture_origin = Vector2i(0, 48)
+1:0/0/y_sort_origin = 15
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5, 10, 5, 10, 5, 13.5, 3.5, 16, -5, 16)
+1:0/0/custom_data_0 = "Poplar Tree"
+2:0/0 = 0
+2:0/0/texture_origin = Vector2i(0, 48)
+2:0/0/y_sort_origin = 15
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-11, 5.5, 7, 5.5, 9, 12, 9.5, 16, -13, 16, -13, 11)
+2:0/0/custom_data_0 = "Poplar Tree"
+3:0/0 = 0
+3:0/0/texture_origin = Vector2i(0, 48)
+3:0/0/y_sort_origin = 15
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 8, 6, 8, 8, 12.5, 5.5, 16, -6, 16, -8, 13.5)
+3:0/0/custom_data_0 = "Poplar Tree"
+
+[resource]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 1
+physics_layer_0/physics_material = SubResource("PhysicsMaterial_lj2i4")
+custom_data_layer_0/name = "g_resource_name"
+custom_data_layer_0/type = 4
+sources/0 = SubResource("TileSetAtlasSource_83ykl")

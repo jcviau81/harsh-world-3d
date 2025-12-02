@@ -1,0 +1,332 @@
+{
+	"world": {
+		"chunk_size": 512,
+		"view_distance": 4,
+		"unload_distance": 6,
+		"map_seed": 4531,
+		"test_mode": true,
+		"test_mode_limit": 3,
+		"seamless_generation": false,
+		"clamp_world_boundaries": true
+	},
+	"rendering": {
+		"tile_pixel_size": 16,
+		"enable_debug_overlay": true
+	},
+	"camera": {
+		"min_zoom": 1,
+		"max_zoom": 3,
+		"zoom_speed": 0.1,
+		"default_zoom": 1.0
+	},
+	"streaming": {
+		"use_streaming": true,
+		"throttle_chunks_per_frame": 1
+	},
+	"hydrology": {
+		"enabled": true,
+		"dem_noise_seed": null,
+		"dem_noise_frequency": 0.0008,
+		"water_classification": {
+			"creek": {
+				"fa_threshold_min": 3,
+				"fa_threshold_max": 20,
+				"width_tiles": 1,
+				"color": [0.35, 0.55, 0.75]
+			},
+			"stream": {
+				"fa_threshold_min": 20,
+				"fa_threshold_max": 50,
+				"width_tiles": 1,
+				"color": [0.25, 0.45, 0.70]
+			},
+			"river": {
+				"fa_threshold_min": 50,
+				"width_tiles": 2,
+				"color": [0.15, 0.35, 0.65]
+			},
+			"lake": {
+				"min_depth": 0.25,
+				"min_area_tiles": 4,
+				"color": [0.10, 0.30, 0.60]
+			}
+		},
+		"ocean": {
+			"boundary_elevation": 0.0,
+			"enforce_connectivity": true
+		},
+		"performance": {
+			"chunks_per_frame": 1,
+			"enable_progressive_refinement": true
+		}
+	},
+	"biomes": {
+		"feature_layers": {
+			"wetlands": {
+				"spawn_chance": 0.08,
+				"noise_frequency": 0.004,
+				"can_spawn_in": ["coastal_atlantic", "temperate_forest", "deciduous_forest", "grasslands"],
+				"description": "Wetlands and marshes that spawn as features in multiple biomes"
+			},
+			"small_lake": {
+				"spawn_chance": 0.12,
+				"noise_frequency": 0.006,
+				"can_spawn_in": ["coastal_atlantic", "temperate_forest", "deciduous_forest", "grasslands", "appalachian_mountains", "boreal_forest"],
+				"description": "Lakes that spawn as features in multiple biomes"
+			}
+		},
+		"definitions": {
+			"coastal_atlantic": {
+				"color": [0.8, 0.7, 0.5],
+				"description": "Coastal Atlantic beaches and marshes",
+				"terrain_types": {
+					"sandy_beach": {
+						"color": [0.9, 0.8, 0.6],
+						"walkable": true,
+						"movement_speed": 0.9,
+						"description": "Sandy beaches - easy travel",
+						"resources": {
+							"fish": { "spawn_chance": 0.3, "max_per_tile": 1 },
+							"shellfish": { "spawn_chance": 0.2, "max_per_tile": 1 },
+							"salt": { "spawn_chance": 0.1, "max_per_tile": 1 }
+						}
+					},
+					"coastal_grass": {
+						"color": [0.6, 0.6, 0.3],
+						"walkable": true,
+						"movement_speed": 1.0,
+						"description": "Coastal grassland and dunes",
+						"resources": {
+							"grass": { "spawn_chance": 0.4, "max_per_tile": 2 },
+							"wildflower": { "spawn_chance": 0.25, "max_per_tile": 1 },
+							"wood": { "spawn_chance": 0.15, "max_per_tile": 1 }
+						}
+					}
+				},
+				"terrain_threshold": 0.5
+			},
+			"temperate_forest": {
+				"color": [0.3, 0.5, 0.2],
+				"description": "Temperate mixed forests",
+				"terrain_types": {
+					"light_forest": {
+						"color": [0.4, 0.6, 0.3],
+						"walkable": true,
+						"movement_speed": 0.9,
+						"description": "Light forest - moderate movement",
+						"resources": {
+							"maple": { "spawn_chance": 0.35, "max_per_tile": 1 },
+							"birch": { "spawn_chance": 0.28, "max_per_tile": 1 },
+							"poplar": { "spawn_chance": 0.2, "max_per_tile": 1 }
+						}
+					},
+					"dense_temperate_forest": {
+						"color": [0.2, 0.4, 0.15],
+						"walkable": true,
+						"movement_speed": 0.6,
+						"description": "Dense temperate forest - slow movement",
+						"resources": {
+							"maple": { "spawn_chance": 0.5, "max_per_tile": 1 },
+							"birch": { "spawn_chance": 0.42, "max_per_tile": 1 },
+							"poplar": { "spawn_chance": 0.28, "max_per_tile": 1 }
+						}
+					}
+				},
+				"terrain_threshold": 0.5
+			},
+			"deciduous_forest": {
+				"color": [0.25, 0.45, 0.15],
+				"description": "Deciduous forests of mid-Atlantic",
+				"terrain_types": {
+					"sparse_hardwood": {
+						"color": [0.35, 0.55, 0.25],
+						"walkable": true,
+						"movement_speed": 0.85,
+						"description": "Sparse hardwood forest",
+						"resources": {
+							"maple": { "spawn_chance": 0.38, "max_per_tile": 1 },
+							"birch": { "spawn_chance": 0.32, "max_per_tile": 1 }
+						}
+					},
+					"dense_hardwood": {
+						"color": [0.15, 0.35, 0.1],
+						"walkable": true,
+						"movement_speed": 0.5,
+						"description": "Dense hardwood forest - very slow",
+						"resources": {
+							"maple": { "spawn_chance": 0.55, "max_per_tile": 1 },
+							"birch": { "spawn_chance": 0.48, "max_per_tile": 1 },
+							"poplar": { "spawn_chance": 0.28, "max_per_tile": 1 }
+						}
+					}
+				},
+				"terrain_threshold": 0.5
+			},
+			"grasslands": {
+				"color": [0.5, 0.65, 0.3],
+				"description": "Great Plains grasslands",
+				"terrain_types": {
+					"prairie_grass": {
+						"color": [0.55, 0.7, 0.35],
+						"walkable": true,
+						"movement_speed": 1.0,
+						"description": "Open prairie grassland",
+						"resources": {
+							"grass": { "spawn_chance": 0.4, "max_per_tile": 2 },
+							"buffalo": { "spawn_chance": 0.15, "max_per_tile": 1 },
+							"wildflower": { "spawn_chance": 0.2, "max_per_tile": 1 },
+							"poplar": { "spawn_chance": 0.1, "max_per_tile": 1 }
+						}
+					},
+					"tall_grass": {
+						"color": [0.45, 0.6, 0.25],
+						"walkable": true,
+						"movement_speed": 0.85,
+						"description": "Tall grass prairie - slight movement penalty",
+						"resources": {
+							"grass": { "spawn_chance": 0.5, "max_per_tile": 3 },
+							"buffalo": { "spawn_chance": 0.25, "max_per_tile": 1 },
+							"plant": { "spawn_chance": 0.3, "max_per_tile": 2 },
+							"poplar": { "spawn_chance": 0.15, "max_per_tile": 1 }
+						}
+					}
+				},
+				"terrain_threshold": 0.5
+			},
+			"appalachian_mountains": {
+				"color": [0.55, 0.55, 0.55],
+				"description": "Appalachian mountains and highlands",
+				"terrain_types": {
+					"mountain_slope": {
+						"color": [0.65, 0.65, 0.65],
+						"walkable": true,
+						"movement_speed": 0.6,
+						"description": "Mountain slope - difficult terrain",
+						"resources": {
+							"stone": { "spawn_chance": 0.6, "max_per_tile": 2 },
+							"ore": { "spawn_chance": 0.2, "max_per_tile": 1 },
+							"wood": { "spawn_chance": 0.3, "max_per_tile": 1 }
+						}
+					},
+					"rocky_cliff": {
+						"color": [0.45, 0.45, 0.45],
+						"walkable": false,
+						"movement_speed": 0.0,
+						"description": "Rocky cliff - impassable",
+						"resources": {
+							"stone": { "spawn_chance": 0.8, "max_per_tile": 2 },
+							"ore": { "spawn_chance": 0.3, "max_per_tile": 1 }
+						}
+					}
+				},
+				"terrain_threshold": 0.5
+			},
+			"boreal_forest": {
+				"color": [0.15, 0.35, 0.15],
+				"description": "Boreal northern coniferous forests",
+				"terrain_types": {
+					"sparse_boreal": {
+						"color": [0.25, 0.45, 0.25],
+						"walkable": true,
+						"movement_speed": 0.8,
+						"description": "Sparse boreal forest",
+						"resources": {
+							"pine": { "spawn_chance": 0.42, "max_per_tile": 1 },
+							"birch": { "spawn_chance": 0.24, "max_per_tile": 1 }
+						}
+					},
+					"dense_boreal": {
+						"color": [0.1, 0.25, 0.1],
+						"walkable": true,
+						"movement_speed": 0.4,
+						"description": "Dense boreal forest - extreme difficulty",
+						"resources": {
+							"pine": { "spawn_chance": 0.58, "max_per_tile": 1 },
+							"birch": { "spawn_chance": 0.38, "max_per_tile": 1 }
+						}
+					}
+				},
+				"terrain_threshold": 0.5
+			},
+			"wetlands": {
+				"color": [0.3, 0.45, 0.35],
+				"description": "Wetlands and swamps",
+				"terrain_types": {
+					"shallow_marsh": {
+						"color": [0.35, 0.5, 0.4],
+						"walkable": true,
+						"movement_speed": 0.5,
+						"description": "Shallow marsh - slow movement",
+						"resources": {
+							"fish": { "spawn_chance": 0.35, "max_per_tile": 2 },
+							"reed": { "spawn_chance": 0.3, "max_per_tile": 1 },
+							"waterfowl": { "spawn_chance": 0.2, "max_per_tile": 1 },
+							"willow": { "spawn_chance": 0.15, "max_per_tile": 1 }
+						}
+					},
+					"deep_swamp": {
+						"color": [0.2, 0.35, 0.25],
+						"walkable": true,
+						"movement_speed": 0.3,
+						"description": "Deep swamp - very difficult",
+						"resources": {
+							"beaver": { "spawn_chance": 0.3, "max_per_tile": 1 },
+							"medicinal_plant": { "spawn_chance": 0.2, "max_per_tile": 1 },
+							"waterfowl": { "spawn_chance": 0.3, "max_per_tile": 2 },
+							"willow": { "spawn_chance": 0.2, "max_per_tile": 1 }
+						}
+					}
+				},
+				"terrain_threshold": 0.5
+			},
+			"small_lake": {
+				"color": [0.2, 0.4, 0.8],
+				"description": "Water lakes",
+				"terrain_types": {
+					"shallow_water": {
+						"color": [0.3, 0.5, 0.9],
+						"walkable": true,
+						"movement_speed": 0.5,
+						"description": "Shallow water - slow movement",
+						"resources": {
+							"fish": { "spawn_chance": 0.4, "max_per_tile": 2 },
+							"reed": { "spawn_chance": 0.3, "max_per_tile": 1 },
+							"willow": { "spawn_chance": 0.1, "max_per_tile": 1 }
+						}
+					},
+					"deep_water": {
+						"color": [0.1, 0.3, 0.7],
+						"walkable": false,
+						"movement_speed": 0.0,
+						"description": "Deep water - not traversable",
+						"resources": {
+							"fish": { "spawn_chance": 0.15, "max_per_tile": 1 }
+						}
+					}
+				},
+				"terrain_threshold": 0.5
+			},
+			"ocean": {
+				"color": [0.05, 0.15, 0.5],
+				"description": "Open ocean - impassable boundary",
+				"terrain_types": {
+					"deep_ocean": {
+						"color": [0.05, 0.15, 0.5],
+						"walkable": false,
+						"movement_speed": 0.0,
+						"description": "Deep ocean - world boundary",
+						"resources": {}
+					}
+				},
+				"terrain_threshold": 0.5
+			}
+		},
+		"generation": {
+			"noise_type": "perlin",
+			"base_frequency": 0.0015,
+			"color_variation": 0.4,
+			"regional_frequency": 0.0003,
+			"regional_influence_strength": 0.2
+		}
+	}
+}

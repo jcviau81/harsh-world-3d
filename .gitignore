@@ -1,0 +1,11 @@
+#BMAD
+.bmad/
+
+# Claude
+.claude/
+nul
+
+# Godot 4+ specific ignores
+.godot/
+/android/
+/addons/gut

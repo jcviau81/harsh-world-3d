@@ -1,0 +1,39 @@
+[gd_resource type="TileSet" load_steps=4 format=3 uid="uid://djc18nl7stu86"]
+
+[ext_resource type="Texture2D" uid="uid://cl0g67hksunhy" path="res://assets/sprites/vegetation/trees/willow/willow.png" id="1_gdn6g"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mlss8"]
+resource_name = "wood"
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cdskk"]
+texture = ExtResource("1_gdn6g")
+texture_region_size = Vector2i(128, 128)
+use_texture_padding = false
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 48)
+0:0/0/y_sort_origin = 15
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12.5, 5, 5, 5, 6.5, 16, -13, 16)
+0:0/0/custom_data_0 = "Poplar Tree"
+1:0/0 = 0
+1:0/0/texture_origin = Vector2i(0, 48)
+1:0/0/y_sort_origin = 15
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(4, 9.5, 4, 13.5, 2, 16, -11.5, 16, -14, 14, -14, 10, -13, 7, 2.5, 7)
+1:0/0/custom_data_0 = "Poplar Tree"
+2:0/0 = 0
+2:0/0/texture_origin = Vector2i(0, 48)
+2:0/0/y_sort_origin = 15
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, 6, 9, 8.5, 9, 14, 6.5, 16, -7, 16, -9, 13.5, -9, 10, -8, 6)
+2:0/0/custom_data_0 = "Poplar Tree"
+3:0/0 = 0
+3:0/0/texture_origin = Vector2i(0, 48)
+3:0/0/y_sort_origin = 15
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(7, 6.5, 8, 9, 8, 13.5, 6, 16, -7.5, 16, -10, 14, -10, 10, -9, 6.5)
+3:0/0/custom_data_0 = "Poplar Tree"
+
+[resource]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 1
+physics_layer_0/physics_material = SubResource("PhysicsMaterial_mlss8")
+custom_data_layer_0/name = "g_resource_name"
+custom_data_layer_0/type = 4
+sources/0 = SubResource("TileSetAtlasSource_cdskk")

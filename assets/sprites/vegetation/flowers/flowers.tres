@@ -1,0 +1,43 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://galot6fnqhbj"]
+
+[ext_resource type="Texture2D" uid="uid://dnf2al8bqn5wd" path="res://assets/sprites/vegetation/flowers/flowers.png" id="1_5cvpo"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lv7q5"]
+texture = ExtResource("1_5cvpo")
+1:0/0 = 0
+1:0/0/custom_data_0 = "Blue Dandelion"
+2:0/0 = 0
+2:0/0/custom_data_0 = "Wild Flower"
+3:0/0 = 0
+3:0/0/custom_data_0 = "Wild Flower"
+0:1/0 = 0
+0:1/0/custom_data_0 = "Wild Petunia"
+1:1/0 = 0
+1:1/0/custom_data_0 = "Coneflower"
+2:1/0 = 0
+2:1/0/custom_data_0 = "Wild Flower"
+3:1/0 = 0
+3:1/0/custom_data_0 = "Wild Flower"
+0:2/0 = 0
+0:2/0/custom_data_0 = "Threadleaf  Flower"
+1:2/0 = 0
+1:2/0/custom_data_0 = "Red Prairie Flower"
+2:2/0 = 0
+2:2/0/custom_data_0 = "Yellow Tulip"
+3:2/0 = 0
+3:2/0/custom_data_0 = "Violet Tulip"
+0:3/0 = 0
+0:3/0/custom_data_0 = "Blue Prairie Flower"
+1:3/0 = 0
+1:3/0/custom_data_0 = "White Prairie Flower"
+2:3/0 = 0
+2:3/0/custom_data_0 = "Blue Tulip"
+3:3/0 = 0
+3:3/0/custom_data_0 = "White Tulip"
+0:0/0 = 0
+0:0/0/custom_data_0 = "White Dandelion"
+
+[resource]
+custom_data_layer_0/name = "g_resource_name"
+custom_data_layer_0/type = 4
+sources/0 = SubResource("TileSetAtlasSource_lv7q5")
