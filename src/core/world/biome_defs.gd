@@ -160,3 +160,7 @@ static func get_biome_definition(biome_type: String) -> BiomeDefinition:
 	if biome_type in _biomes:
 		return _biomes[biome_type]
 	return null
+
+## Check if biome type is valid
+static func is_valid_biome(biome_type: String) -> bool:
+	return biome_type in BIOME_CONFIGS
