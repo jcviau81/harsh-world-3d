@@ -1,0 +1,104 @@
+# generated: 2025-12-03
+# project: harsh-world-3d
+# project_key: HW-MVP-001
+# tracking_system: file-system
+# story_location: {project-root}/docs/sprint-artifacts
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic exists in epic file but not contexted
+#   - contexted: Epic tech context created (required before drafting stories)
+#   - in-progress: Epic work is underway
+#   - done: Epic completed
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - drafted: Story file created in stories folder
+#   - ready-for-dev: Draft approved and story context created
+#   - in-progress: Developer actively working on implementation
+#   - review: Under review (via code-review workflow)
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - completed: Retrospective has been done
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epics should be 'contexted' before stories can be 'drafted'
+# - Stories can be worked in parallel if team capacity allows
+# - SM typically drafts next story after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', SM reviews, then Dev moves to 'done'
+
+development_status:
+  # EPIC 1: Foundation & GPU Validation (5 stories)
+  epic-1: in-progress
+  1-1-godot-project-setup: done
+  1-2-gpu-compute-shader-setup: done
+  1-3-grid-based-world-object-system: done
+  1-4-chunk-manager-streaming: done
+  1-5-world-seed-system: ready-for-dev
+  epic-1-retrospective: optional
+
+  # EPIC 2: Procedural World Generation (4 stories)
+  epic-2: backlog
+  2-1-biome-system: backlog
+  2-2-water-system: backlog
+  2-3-exploration-navigation: backlog
+  2-4-seasonal-system: backlog
+  epic-2-retrospective: optional
+
+  # EPIC 3: Core Survival Loop (6 stories)
+  epic-3: backlog
+  3-1-player-stamina-health: backlog
+  3-2-foraging-system: backlog
+  3-3-hunting-system: backlog
+  3-4-fishing-system: backlog
+  3-5-food-preparation-menu: backlog
+  3-6-food-consumption-nutrition: backlog
+  epic-3-retrospective: optional
+
+  # EPIC 4: Fire & Shelter Management (3 stories)
+  epic-4: backlog
+  4-1-settlement-building: backlog
+  4-2-fire-system: backlog
+  4-3-shelter-system: backlog
+  epic-4-retrospective: optional
+
+  # EPIC 5: Permadeath & World Persistence (4 stories)
+  epic-5: backlog
+  5-1-character-death-mechanics: backlog
+  5-2-world-reset: backlog
+  5-3-settlement-persistence: backlog
+  5-4-respawn-mechanics: backlog
+  epic-5-retrospective: optional
+
+  # EPIC 6: NPC Trading System (3 stories)
+  epic-6: backlog
+  6-1-npc-merchant-system: backlog
+  6-2-reputation-system: backlog
+  6-3-trade-chains: backlog
+  epic-6-retrospective: optional
+
+  # EPIC 7: UI & Game Support Systems (6 stories)
+  epic-7: backlog
+  7-1-minimal-hud: backlog
+  7-2-inventory-system: backlog
+  7-3-food-preparation-menu: backlog
+  7-4-trading-interface: backlog
+  7-5-save-load-system: backlog
+  7-6-music-sound-effects: backlog
+  epic-7-retrospective: optional
+
+# SUMMARY:
+# ========
+# Total Epics: 7
+# Total Stories: 31
+# Implementation Order: Dependency-based (GPU validation first, then world generation, then gameplay)
+#
+# CRITICAL PATH:
+# - Epic 1 (Foundation & GPU): MUST be validated before Epic 2
+# - Epic 2 (World Gen): Built on validated GPU from Epic 1
+# - Epics 3-5 (Core Gameplay): Sequential implementation
+# - Epics 6-7 (Content & Polish): Final systems

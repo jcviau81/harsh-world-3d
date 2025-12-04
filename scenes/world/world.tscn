@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://c8iywwxpt34qu"]
+
+[ext_resource type="PackedScene" uid="uid://df7qgcwf8a0gm" path="res://scenes/player/player.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://bcmmxl8hxgjb4" path="res://scenes/ui/main_ui.tscn" id="2"]
+[ext_resource type="Script" path="res://src/core/rendering/camera_controller.gd" id="3"]
+[ext_resource type="Script" path="res://src/core/world/chunk_manager.gd" id="5"]
+[ext_resource type="Script" path="res://src/core/world/save_manager.gd" id="4"]
+
+[node name="World" type="Node3D"]
+
+[node name="ChunkManager" type="Node3D" parent="."]
+script = ExtResource("5")
+
+[node name="Player" parent="." instance=ExtResource("1")]
+position = Vector3(0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+script = ExtResource("3")
+follow_speed = 0.1
+camera_distance = 50.0
+camera_height = 40.0
+fov = 70.0
+
+[node name="HUD" parent="." instance=ExtResource("2")]
+
+[node name="Environments" type="Node3D" parent="."]
+
+[node name="WorldLight" type="DirectionalLight3D" parent="Environments"]
+position = Vector3(50, 50, 50)
+rotation = Vector3(-0.785398, -0.785398, 0)
+
+[node name="Systems" type="Node3D" parent="."]
+
+[node name="NeedsSystem" type="Node" parent="Systems"]
+
+[node name="AudioManager" type="Node" parent="Systems"]
+
+[node name="SaveManager" type="Node" parent="Systems"]
+script = ExtResource("4")
