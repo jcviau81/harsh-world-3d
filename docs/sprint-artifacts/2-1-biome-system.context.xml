@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<story-context id=".bmad/bmgd/workflows/4-production/story-context" v="1.0">
+  <metadata>
+    <epicId>2</epicId>
+    <storyId>2.1</storyId>
+    <title>Biome System - Create Unique Environments</title>
+    <status>drafted</status>
+    <generatedAt>2025-12-03</generatedAt>
+    <generator>BMAD Story Context Workflow (Claude Haiku)</generator>
+    <sourceStoryPath>docs/sprint-artifacts/2-1-biome-system.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>player</asA>
+    <iWant>distinct biomes with unique flora, fauna, resources, and visual appearance</iWant>
+    <soThat>exploration feels varied and different regions require different strategies</soThat>
+
+    <tasks>
+      <summary>8 Implementation Tasks covering biome definitions, assignment algorithm, resource spawning, difficulty mechanics, visual representation, testing, documentation, and world integration</summary>
+      <taskList>
+        <task id="1" title="Biome Definitions &amp; Data Structure">Create BiomeDefinition class and 7 biome resource files (Coastal Atlantic, Temperate Forest, Deciduous Forest, Grasslands, Appalachian Mountains, Boreal Forest, Wetlands)</task>
+        <task id="2" title="Biome Assignment Algorithm">Implement regional noise-based biome assignment using heightmap + Perlin noise for deterministic biome generation</task>
+        <task id="3" title="Resource Spawn System Integration">Extend BiomeResourceSpawner with biome-specific spawn rates, seasonal modifiers, and animal distribution</task>
+        <task id="4" title="Biome Difficulty &amp; Gameplay Mechanics">Implement movement speed modifiers, temperature system, and difficulty tiers per biome</task>
+        <task id="5" title="Visual Biome Representation">Create sprite set mappings, seasonal visuals, and audio context per biome</task>
+        <task id="6" title="Biome Validation &amp; Testing">Create unit tests, integration tests, and performance benchmarks</task>
+        <task id="7" title="Documentation &amp; Architecture Integration">Document biome system design, update architecture specs, create implementation guide</task>
+        <task id="8" title="Integration with World System">Wire biome_generator into chunk_manager and resource spawning pipeline</task>
+      </taskList>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="1">7 primary biomes defined: Coastal Atlantic, Temperate Forest, Deciduous Forest, Grasslands, Appalachian Mountains, Boreal Forest, Wetlands</criterion>
+    <criterion id="2">Each biome has unique properties: visual appearance, forage items, huntable animals, resources</criterion>
+    <criterion id="3">Biome definition system supports terrain_type variants (2-3 subtypes per biome)</criterion>
+    <criterion id="4">Each biome has unique visual variety: different tree types, water colors, seasonal appearance</criterion>
+    <criterion id="5">Biome assignment based on: regional noise (2D Perlin) + elevation from heightmap</criterion>
+    <criterion id="6">Noise determines broad biome zones, elevation refines within zone</criterion>
+    <criterion id="7">Terrain type assignment: Each biome has 2-3 terrain subtypes affecting resource distribution</criterion>
+    <criterion id="8">Biome transitions: Smooth transition zones between biomes (not sharp borders)</criterion>
+    <criterion id="9">Biome persistence: Same seed produces same biome layout (deterministic)</criterion>
+    <criterion id="10">Resource spawning maps biome_data → object types (trees, rocks, resources)</criterion>
+    <criterion id="11">Biome-specific resources: Coastal has kelp, forest has mushrooms, mountains have rare herbs</criterion>
+    <criterion id="12">Resource spawn rates vary by biome: Dense forest 80%, Sparse grassland 20%</criterion>
+    <criterion id="13">Seasonal resource variation: Spring/Summer have more forage, Winter less</criterion>
+    <criterion id="14">Animal distribution: Each biome has unique huntable creatures</criterion>
+    <criterion id="15">Biome difficulty tier: Mountain harder (cold, sparse), Forest easier (resources)</criterion>
+    <criterion id="16">Temperature base adjustment per biome: Mountain -5°C, Desert +10°C, Forest 0°C</criterion>
+    <criterion id="17">Movement speed modifiers per terrain type: Mountains 0.7x, grassland 1.0x, forest 0.8x</criterion>
+    <criterion id="18">Navigation difficulty: Mountains require pathfinding, grasslands direct</criterion>
+    <criterion id="19">Biome sprites differ: Tree types, water colors, vegetation density</criterion>
+    <criterion id="20">Seasonal appearance: Winter snow in mountains, summer green in forests</criterion>
+    <criterion id="21">Audio context: Different ambient sounds per biome (forest birds vs ocean waves)</criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/game-architecture.md</path>
+        <title>Game Architecture Document</title>
+        <section>Decision Summary - Biome System, World Generation, Rendering Grid</section>
+        <snippet>Biome system uses regional noise-based biomes with terrain_types, movement_speed modifiers, and resource spawning. 7 primary biomes with 2-3 terrain_types each; feature layers spawn across regions; resources vary by terrain. Node-based world objects (Sprite3D + CollisionShape3D) instead of GridMap placed on 32×32 grid positions.</snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>Epic Breakdown - Harsh World</title>
+        <section>Epic 2: Procedural World Generation - Story 2.1: Biome System</section>
+        <snippet>7 primary biomes implemented with unique visual appearance, forage items, huntable animals, resources. Biome selection based on regional noise + elevation. Terrain types: Each biome has 2-3 terrain subtypes affecting resource distribution. Biome visual variety and difficulty tiers documented.</snippet>
+      </doc>
+      <doc>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>Product Scope - Content: 3-4 core biomes (temperate forest, boreal forest, coast, mountains)</section>
+        <snippet>MVP includes 3-4 core biomes with unique characteristics. Full version expands to 7 primary biomes. Water system (rivers, lakes, fishing, canoe travel) and seasonal visual indicators (spring, summer, autumn, winter) integrated with biome system.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-phase1-core-prototype.md</path>
+        <title>Tech Spec Phase 1: Core Prototype</title>
+        <section>GPU Terrain Generation &amp; Chunk System</section>
+        <snippet>Heightmap output from GPU compute shader (elevation 0.0-1.0) serves as input for biome assignment. Deterministic per chunk using same seed + chunk_x/y formula. Chunk size 32×32 units with streaming radius 3 chunks (5×5 grid visible).</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/1-4-chunk-manager-streaming.md</path>
+        <title>Story 1.4: Chunk Manager Streaming &amp; Persistence</title>
+        <section>Learnings from Story 1.4 for Story 2.1</section>
+        <snippet>Async loading prevents main thread stalls. Deterministic seeding essential: base_seed ^ (chunk_x &lt;&lt; 16) ^ chunk_y. Chunk boundaries must be seamless. Biome assignments affect entire chunk (immutable like heightmap). Resource spawning uses biome data (mutable within chunk).</snippet>
+      </doc>
+    </docs>
+
+    <code>
+      <artifact>
+        <path>src/core/world/biome_resource_spawner.gd</path>
+        <kind>service</kind>
+        <symbol>BiomeResourceSpawner class (from Story 1.3)</symbol>
+        <reason>Story 2.1 extends this class to accept biome_data and use biome-specific spawn rates instead of generic rates</reason>
+      </artifact>
+      <artifact>
+        <path>src/core/world/world_object.gd</path>
+        <kind>component</kind>
+        <symbol>WorldObject base class</symbol>
+        <reason>All biome resources (trees, rocks, resources) instantiate as WorldObject nodes with Sprite3D + CollisionShape3D. Story 2.1 defines biome-specific object types and sprite variants</reason>
+      </artifact>
+      <artifact>
+        <path>src/core/world/chunk_manager.gd</path>
+        <kind>service</kind>
+        <symbol>ChunkManager class (from Story 1.4)</symbol>
+        <reason>Story 2.1 integrates biome_generator into chunk loading pipeline - ChunkManager calls BiomeGenerator.assign_biome_for_chunk() and passes biome data to resource spawning</reason>
+      </artifact>
+      <artifact>
+        <path>src/core/world/terrain_generation.gd</path>
+        <kind>service</kind>
+        <symbol>TerrainGenerator class (from Story 1.2)</symbol>
+        <reason>Provides heightmap output that Story 2.1 biome_generator uses as input for biome assignment algorithm</reason>
+      </artifact>
+      <artifact>
+        <path>tests/test_world_object.gd</path>
+        <kind>test</kind>
+        <symbol>WorldObject tests (from Story 1.3)</symbol>
+        <reason>Establishes test patterns for world objects - Story 2.1 creates similar tests for biome-specific object spawning</reason>
+      </artifact>
+      <artifact>
+        <path>tests/test_chunk_manager.gd</path>
+        <kind>test</kind>
+        <symbol>ChunkManager tests (from Story 1.4)</symbol>
+        <reason>Establishes integration test patterns - Story 2.1 creates similar tests for biome assignments within chunks</reason>
+      </artifact>
+    </code>
+
+    <dependencies>
+      <godot>
+        <engine>Godot 4.x 3D Engine</engine>
+        <version>4.0+</version>
+        <notes>RenderingDevice API for GPU compute shaders (Story 1.2 integration), FastNoiseLite for Perlin noise generation in BiomeGenerator</notes>
+      </godot>
+      <plugin>
+        <name>Waterways .NET</name>
+        <version>2.x</version>
+        <notes>Water system plugin - Story 2.2 reads biome data for water routing; Story 2.1 provides biome types that determine water distribution</notes>
+      </plugin>
+      <framework>
+        <name>GDScript 4.x</name>
+        <notes>All game logic and biome system written in GDScript with typed Array, Dictionary, and Resource classes</notes>
+      </framework>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>
+      <category>Determinism</category>
+      <rule>All biome assignments MUST be deterministic: same world_seed + chunk_x + chunk_y → identical biome (pixel-perfect). Verified with 10+ test chunks.</rule>
+      <reference>Game Architecture - Decision Summary: "Deterministic seed-based chunking"</reference>
+    </constraint>
+    <constraint>
+      <category>Performance</category>
+      <rule>Biome assignment time per chunk: target &lt; 50ms. Resource spawning: target &lt; 100ms total per chunk. Fit 100+ chunks in memory without regression.</rule>
+      <reference>Story 1.4 learnings: Async loading prevents main thread stalls</reference>
+    </constraint>
+    <constraint>
+      <category>Architecture Pattern</category>
+      <rule>BiomeGenerator outputs immutable biome_type (like heightmap). Resource spawning is mutable (objects can be removed). Chunk persistence: only save modified chunks (is_modified flag).</rule>
+      <reference>Game Architecture - World Modification Pattern</reference>
+    </constraint>
+    <constraint>
+      <category>Code Organization</category>
+      <rule>Files use snake_case (biome_generator.gd), classes use PascalCase (BiomeGenerator). All paths project-relative. BiomeDefinition extends Resource for .tres persistence.</rule>
+      <reference>Game Architecture - Naming Conventions</reference>
+    </constraint>
+    <constraint>
+      <category>Integration</category>
+      <rule>BiomeGenerator must integrate with Story 1.2 (GPU heightmap output) and Story 1.4 (ChunkManager). Resource spawning extends Story 1.3's BiomeResourceSpawner. No circular dependencies.</rule>
+      <reference>Epic 2 dependencies: "Built entirely on validated GPU pipeline from Epic 1"</reference>
+    </constraint>
+    <constraint>
+      <category>Data Structure</category>
+      <rule>BiomeDefinition class: @export properties for persistence in .tres format. Include: name, terrain_types[], spawn_rates{}, forage_items[], huntable_animals[], base_temperature, difficulty_tier, audio references.</rule>
+      <reference>Story Dev Notes: BiomeDefinition class structure pattern</reference>
+    </constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>BiomeGenerator.assign_biome_for_chunk()</name>
+      <kind>GDScript method</kind>
+      <signature>func assign_biome_for_chunk(heightmap: PackedFloat32Array, chunk_seed: int) → String (biome_id)</signature>
+      <path>src/core/world/biome_generator.gd</path>
+      <description>Assigns deterministic biome type based on heightmap elevation and regional Perlin noise. Returns biome_id string (e.g., "temperate_forest"). Must be deterministic: same inputs → same output.</description>
+    </interface>
+    <interface>
+      <name>BiomeResourceSpawner.spawn_resources_for_chunk()</name>
+      <kind>GDScript method</kind>
+      <signature>func spawn_resources_for_chunk(chunk_data: ChunkData, biome_data: BiomeDefinition, season: String = "summer") → void</signature>
+      <path>src/core/world/biome_resource_spawner.gd</path>
+      <description>Extended from Story 1.3 to accept biome_data and spawn biome-specific resources. Uses biome_data.spawn_rates[] and applies season_modifiers. Automatically adds objects to chunk_data.</description>
+    </interface>
+    <interface>
+      <name>BiomeDefinition Resource</name>
+      <kind>GDScript Resource class</kind>
+      <signature>class_name BiomeDefinition extends Resource</signature>
+      <path>assets/biome_definitions/biome_data.gd</path>
+      <description>Data class for biome properties. Properties: biome_id (String), spawn_rates (Dictionary), forage_items (Array), huntable_animals (Array), terrain_types (Array), base_temperature (float), difficulty_tier (String). Persisted as .tres files.</description>
+    </interface>
+    <interface>
+      <name>ChunkManager integration</name>
+      <kind>Integration point</kind>
+      <signature>ChunkManager._generate_chunk_from_seed() calls BiomeGenerator.assign_biome_for_chunk()</signature>
+      <path>src/core/world/chunk_manager.gd</path>
+      <description>When generating a new chunk, ChunkManager calls BiomeGenerator to assign biome type based on heightmap, stores in chunk_data.biome_type, then calls BiomeResourceSpawner with biome_data.</description>
+    </interface>
+    <interface>
+      <name>Player movement speed modifier</name>
+      <kind>Player attribute</kind>
+      <signature>Player.current_speed = base_speed × biome_speed_modifier</signature>
+      <path>src/gameplay/player/player.gd</path>
+      <description>Biome terrain_type affects player movement speed. Lookup: BiomeProperties.get_speed_multiplier(current_terrain_type) → 0.7-1.2 multiplier applied to base movement speed.</description>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      <paragraph>GDScript unit tests in tests/test_*.gd files using Godot's native testing patterns. Integration tests verify system interactions (biome → resource spawning → chunk loading). Performance tests benchmark time and memory usage. Tests must verify determinism (same inputs → same outputs) and validate all acceptance criteria mapping. Use PackedFloat32Array for heightmap testing, Dictionary for spawn_rates testing.</paragraph>
+    </standards>
+    <locations>
+      <location>tests/test_biome_system.gd (unit tests for biome core logic)</location>
+      <location>tests/test_biome_integration.gd (integration tests for chunk/resource interactions)</location>
+      <location>tests/test_biome_system.tscn (visual test scene with debug overlays)</location>
+    </locations>
+    <ideas>
+      <idea acId="5-9">test_biome_assignment: Verify heightmap + noise → correct biome assignment; test determinism with 10+ chunks using same seed</idea>
+      <idea acId="10-14">test_resource_spawn_rates: Generate chunk, verify spawn counts match biome_data.spawn_rates within statistical margin (±5%)</idea>
+      <idea acId="15-18">test_movement_speed_modifiers: Verify Player.current_speed multiplied correctly per terrain type; Mountains 0.7x, Grassland 1.0x, Forest 0.8x</idea>
+      <idea acId="19-21">test_biome_visuals: Load chunks in different biomes, verify sprite variants differ; check seasonal appearance changes</idea>
+      <idea acId="1-4">test_biome_definitions: Load all 7 biome .tres files, verify properties populated (forage_items[], huntable_animals[], spawn_rates{})</idea>
+      <idea acId="8-9">test_biome_transitions: Load adjacent chunks with different biomes, verify smooth transitions (spawn rates blend at boundaries)</idea>
+      <idea acId="13">test_seasonal_variation: Verify winter has 50% spawn rates vs summer, simulating seasonal resource changes</idea>
+      <idea acId="20">test_large_world_biome_variety: Generate 25+ chunks, verify 5+ different biome types appear, validating world-scale biome distribution</idea>
+    </ideas>
+  </tests>
+
+</story-context>

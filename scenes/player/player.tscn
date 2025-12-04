@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://df7qgcwf8a0gm"]
+
+[ext_resource type="Script" path="res://src/gameplay/player/player.gd" id="1"]
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1")
+move_speed = 5.0
+run_multiplier = 1.5

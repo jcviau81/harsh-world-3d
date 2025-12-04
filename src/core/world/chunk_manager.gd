@@ -19,6 +19,7 @@ extends Node
 var player: Node3D
 var terrain_generator: Node  # Cache to avoid thread issues
 var biome_spawner: Node  # Cache to avoid thread issues
+var biome_generator: BiomeGenerator  # NEW: Biome assignment system
 var loaded_chunks: Dictionary = {}  # {Vector2i: ChunkData}
 var pending_threads: Array = []  # [{thread, chunk_x, chunk_y}]
 var active_chunks: Array[Vector2i] = []
@@ -40,6 +41,11 @@ func _ready() -> void:
 		terrain_generator = _get_terrain_generator()
 		if not terrain_generator:
 			push_warning("ChunkManager: Could not find TerrainGenerator - chunk generation disabled until assigned")
+
+	# Initialize biome system (NEW in Story 2.1)
+	BiomeDefinitions.initialize()
+	biome_generator = BiomeGenerator.new()
+	biome_generator._ready()
 
 
 func _init() -> void:
@@ -365,8 +371,8 @@ func _generate_chunk_from_seed(chunk_data: ChunkData) -> void:
 	)
 	chunk_data.set_heightmap(heightmap)
 
-	# Step 3: Assign biome from heightmap
-	var biome_type = _assign_biome_from_heightmap(heightmap)
+	# Step 3: Assign biome from heightmap using BiomeGenerator (Story 2.1)
+	var biome_type = biome_generator.assign_biome_for_chunk(heightmap, chunk_data.chunk_x, chunk_data.chunk_y, base_seed)
 	chunk_data.set_biome_type(biome_type)
 
 	# Step 4: Spawn objects via BiomeResourceSpawner (static call - thread-safe)

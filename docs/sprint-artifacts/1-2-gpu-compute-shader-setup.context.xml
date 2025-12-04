@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<story-context id=".bmad/bmgd/workflows/4-production/story-context/1-2" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyKey>1-2-gpu-compute-shader-setup</storyKey>
+    <storyId>1.2</storyId>
+    <title>GPU Compute Shader Setup for Terrain Generation</title>
+    <status>ready-for-dev</status>
+    <priority>P0 CRITICAL</priority>
+    <generatedAt>2025-12-03</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/1-2-gpu-compute-shader-setup.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>developer</asA>
+    <iWant>implement the Godot RenderingDevice API with GLSL compute shaders</iWant>
+    <soThat>deterministic terrain generation runs on GPU for performance</soThat>
+    <validationMilestone>This story's completion validates the GPU pipeline. If this fails, the project architecture cannot proceed. Extensive testing required.</validationMilestone>
+    <tasks>
+      <task id="1">GPU Compute Infrastructure Setup (AC: #1, #2)</task>
+      <task id="2">Compute Dispatch &amp; Data Flow (AC: #3, #5)</task>
+      <task id="3">Determinism Validation (AC: #6, #7, #8, #9)</task>
+      <task id="4">Multi-GPU Compatibility (AC: #2 testing)</task>
+      <task id="5">Performance Profiling (AC: #10, #11)</task>
+      <task id="6">Error Handling &amp; Documentation (AC: #12, #13, #14)</task>
+      <task id="7">Integration &amp; Validation Sign-Off (AC: #15)</task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="1" priority="critical">RenderingDevice API initialized in terrain_generation.glsl</criterion>
+    <criterion id="2" priority="critical">Compute shader compiles successfully (SPIRV bytecode) on 3+ GPUs (NVIDIA, AMD, Intel)</criterion>
+    <criterion id="3" priority="critical">Heightmap generation shader outputs 32×32 height values per chunk</criterion>
+    <criterion id="4" priority="high">Perlin noise implementation in GPU produces deterministic output from seed</criterion>
+    <criterion id="5" priority="critical">Shader pipeline: seed → noise → heightmap → CPU return</criterion>
+    <criterion id="6" priority="critical">First test chunk generates from seed (e.g., seed=12345 produces same heightmap every run)</criterion>
+    <criterion id="7" priority="critical">100 chunks with same seed produce identical results</criterion>
+    <criterion id="8" priority="critical">Adjacent chunks (0,0) and (1,0) share identical pixels at boundaries (seaming verified)</criterion>
+    <criterion id="9" priority="critical">Ocean border chunks generate consistently with land chunks</criterion>
+    <criterion id="10" priority="high">Chunk generation &lt; 100ms on target hardware</criterion>
+    <criterion id="11" priority="high">Performance tested on NVIDIA GTX 1060, AMD RX 580, Intel Iris equivalents</criterion>
+    <criterion id="12" priority="high">Graceful fallback if GPU doesn't support compute shaders</criterion>
+    <criterion id="13" priority="high">Shader code documented with input/output contracts</criterion>
+    <criterion id="14" priority="high">GPU heightmap outputs correctly to texture readable by CPU</criterion>
+    <criterion id="15" priority="critical">VALIDATION SIGN-OFF: GPU shader works, determinism verified, performance acceptable</criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <document>
+        <path>docs/sprint-artifacts/tech-spec-phase1-core-prototype.md</path>
+        <title>Tech-Spec: Phase 1 - Core Prototype</title>
+        <section>GPU Compute Shader Implementation Guide (lines 250-393)</section>
+        <relevance>Complete GLSL shader reference implementation with tileable Perlin noise, elevation gradient, crater simulation. CRITICAL: Read this section completely before implementing shader.</relevance>
+        <snippet>Includes full shader structure with TILE_SIZE constant, tileable_perlin() function, elevation_gradient(), crater_simulation(). Validation requirements for seaming and determinism.</snippet>
+      </document>
+      <document>
+        <path>docs/epics.md</path>
+        <title>Harsh World - Epic Breakdown</title>
+        <section>Story 1.2: GPU Compute Shader Setup (lines 130-176)</section>
+        <relevance>User-facing story requirements and acceptance criteria from product perspective. Defines what "validation milestone" means and why GPU is critical path.</relevance>
+        <snippet>⚠️ VALIDATION MILESTONE: This story's completion validates the GPU pipeline. If this fails, the project architecture cannot proceed. Extensive testing required.</snippet>
+      </document>
+      <document>
+        <path>docs/game-architecture.md</path>
+        <title>Game Architecture Document</title>
+        <section>GPU Terrain Generation (referenced in tech-spec)</section>
+        <relevance>High-level architecture decisions about GPU vs CPU, RenderingDevice choice, determinism requirements. Decision rationale for GPU-exclusive approach.</relevance>
+        <snippet>Architecture defines GPU compute as mandatory (ADR-001), determinism as critical (ADR-002), delta-only persistence (ADR-003). No CPU fallback allowed.</snippet>
+      </document>
+      <document>
+        <path>docs/sprint-artifacts/1-1-godot-project-setup.md</path>
+        <title>Story 1.1: Godot Project Setup (COMPLETED)</title>
+        <section>Dev Agent Optimization Guide + Technical Requirements</section>
+        <relevance>Previous story established folder structure, Godot settings, collision layers, camera system. This story builds on that foundation. Contains gotchas to avoid (e.g., don't use GridMap).</relevance>
+        <snippet>Established src/core/world/ folder, CharacterBody3D for player, collision layers 1-2, isometric camera. Story 1.2 adds terrain_generation.gd to core/world/.</snippet>
+      </document>
+    </docs>
+
+    <code>
+      <codeArtifact>
+        <path>src/core/world/</path>
+        <kind>directory</kind>
+        <description>World system directory. Story 1.1 created this folder. Story 1.2 adds terrain_generation.gd here.</description>
+        <reason>GPU compute shader caller will be terrain_generation.gd in this directory. ChunkManager will call this in Story 1.4.</reason>
+      </codeArtifact>
+      <codeArtifact>
+        <path>src/shaders/</path>
+        <kind>directory</kind>
+        <description>Shaders directory (created in Story 1.1). Story 1.2 adds heightmap_compute.glsl here.</description>
+        <reason>GLSL compute shader must be in shaders/ folder. Godot will compile from this location.</reason>
+      </codeArtifact>
+      <codeArtifact>
+        <path>tests/</path>
+        <kind>directory</kind>
+        <description>Tests directory (created in Story 1.1). Story 1.2 adds determinism and performance test files.</description>
+        <reason>Story 1.2 requires comprehensive testing: determinism validation, seaming verification, performance profiling, multi-GPU compatibility.</reason>
+      </codeArtifact>
+      <existingPattern>
+        <description>RenderingDevice API Pattern from Godot 4.x</description>
+        <codeSnippet>
+var rd: RenderingDevice = RenderingServer.create_local_rendering_device()
+var shader = rd.shader_create_from_spirv(compute_shader_spirv)
+var pipeline = rd.compute_pipeline_create(shader)
+# ... buffer allocation and dispatch ...
+var heightmap_result = rd.buffer_get_data(output_buffer)
+        </codeSnippet>
+        <location>Tech-spec lines 163-168</location>
+        <relevance>This is the exact pattern to follow for GPU compute in Godot 4.x. RenderingServer is the correct API (not RenderingDevice directly).</relevance>
+      </existingPattern>
+    </code>
+
+    <dependencies>
+      <dependency>
+        <name>Godot 4.x Engine</name>
+        <version>4.3+</version>
+        <type>engine</type>
+        <requirement>mandatory</requirement>
+        <notes>Must support compute shaders natively. RenderingDevice API available in 4.3+. Godot 3.x NOT compatible.</notes>
+      </dependency>
+      <dependency>
+        <name>GPU with Compute Shader Support</name>
+        <version>Any modern GPU (2012+)</version>
+        <type>hardware</type>
+        <requirement>mandatory</requirement>
+        <notes>Minimum target: NVIDIA GTX 750, AMD RX 580, Intel Iris. Intel Arc, Apple M1+ also supported. Test on 3+ GPU types if possible.</notes>
+      </dependency>
+      <dependency>
+        <name>GDScript Knowledge</name>
+        <version>Godot 4.x GDScript (Python-like)</version>
+        <type>skill</type>
+        <requirement>mandatory</requirement>
+        <notes>Need familiarity with @export, _process(), _ready(), signal patterns in Godot 4.x</notes>
+      </dependency>
+      <dependency>
+        <name>GLSL Compute Shader Basics</name>
+        <version>GLSL 450 (vulkan-compatible)</version>
+        <type>skill</type>
+        <requirement>mandatory</requirement>
+        <notes>Understand compute shader structure, thread groups, work groups, image storage. Tech-spec provides reference implementation but shader understanding required for debugging.</notes>
+      </dependency>
+      <dependency>
+        <name>Project Structure from Story 1.1</name>
+        <version>Completed</version>
+        <type>codebase</type>
+        <requirement>mandatory</requirement>
+        <notes>Story 1.1 must be done. This story builds on: folder structure, Godot settings, collision setup, camera system.</notes>
+      </dependency>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint id="gpu-exclusive">
+      <title>GPU-Exclusive Procedural Generation (ADR-001)</title>
+      <description>All terrain generation must use GPU compute shaders. NO CPU fallback allowed.</description>
+      <implication>If GPU compute not available, fail with clear error message (don't silently fall back to CPU).</implication>
+      <source>game-architecture.md, tech-spec-phase1-core-prototype.md</source>
+    </constraint>
+    <constraint id="determinism-critical">
+      <title>Deterministic World via Seeding (ADR-002)</title>
+      <description>World must be fully reproducible via seed. Same seed = pixel-perfect identical heightmaps.</description>
+      <implication>Same seed must produce identical heightmap on same GPU and different GPUs (within reason). Floating-point precision differences acceptable across platforms, but seaming MUST match exactly.</implication>
+      <testing>Generate same chunk 10 times with same seed. Compare byte-by-byte. Any difference = FAIL. Test on 3+ GPU types.</testing>
+      <source>tech-spec lines 215-225 (seaming critical section)</source>
+    </constraint>
+    <constraint id="chunk-seaming">
+      <title>Chunk Boundary Seaming (Critical for Determinism)</title>
+      <description>Adjacent chunks must have identical heights at boundaries. Example: chunk(0,0) right edge == chunk(1,0) left edge.</description>
+      <implication>Requires tileable Perlin noise implementation. Standard Perlin noise will fail. Must use sine-wave coordinate wrapping.</implication>
+      <validation>Generate chunk (0,0) and (1,0). Extract pixels[x=31, y=0:32] from (0,0) and pixels[x=0, y=0:32] from (1,0). Compare: must be pixel-identical. Test 5 different seeds.</validation>
+      <source>tech-spec lines 293-304 (tileable_perlin function)</source>
+    </constraint>
+    <constraint id="island-ocean-consistency">
+      <title>Island+Ocean Boundary Consistency</title>
+      <description>Ocean chunks surrounding island chunks must generate with consistent heights and natural transitions.</description>
+      <implication>Ocean chunk generation must produce consistent ocean height (not random per chunk). Island→Ocean boundary should show natural elevation gradient (not cliff artifacts).</implication>
+      <validation>Generate 5×5 chunk grid with ocean around island. Verify: ocean chunks all same height, boundary smooth, no visible seams.</validation>
+      <source>tech-spec lines 225-228 (island+ocean validation)</source>
+    </constraint>
+    <constraint id="performance-target">
+      <title>Performance: &lt;100ms per chunk generation</title>
+      <description>Heightmap generation must complete within 100ms on target GPU (GTX 750 equivalent).</description>
+      <implication>Synchronous GPU compute acceptable for determinism validation. Asynchronous dispatch can be added later (Story 1.4).</implication>
+      <testing>Measure generation time for 10 chunks. Average must be &lt;100ms each. Test on GTX 750, RX 580, Intel Iris or equivalents.</testing>
+      <source>tech-spec line 180, lines 485-487 (performance tests)</source>
+    </constraint>
+    <constraint id="naming-convention">
+      <title>Naming Conventions</title>
+      <description>Files use snake_case, classes use PascalCase. Story 1.1 established this.</description>
+      <implication>File: terrain_generation.gd, Class: class_name TerrainGenerator. File: heightmap_compute.glsl. Folder: src/core/world/</implication>
+      <source>Story 1.1 Dev Notes + tech-spec lines 81-84</source>
+    </constraint>
+    <constraint id="error-handling">
+      <title>Graceful Error Handling</title>
+      <description>GPU failures must be caught and reported clearly, not crash the engine.</description>
+      <implication>Catch RenderingDevice failures, shader compilation errors, buffer allocation failures. Log GPU info (model, VRAM, driver).</implication>
+      <testing>Test with non-existent shader file, invalid uniforms, insufficient VRAM. Verify error messages are helpful.</testing>
+    </constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>TerrainGenerator.generate_heightmap()</name>
+      <kind>function signature</kind>
+      <signature>func generate_heightmap(chunk_x: int, chunk_y: int, seed: int) -> PackedFloat32Array</signature>
+      <description>Main entry point for GPU terrain generation. Called by ChunkManager (Story 1.4).</description>
+      <inputs>
+        <param name="chunk_x" type="int">Chunk coordinate (0, 1, 2, ...). Determines world position for noise sampling.</param>
+        <param name="chunk_y" type="int">Chunk coordinate (0, 1, 2, ...). Determines world position for noise sampling.</param>
+        <param name="seed" type="int">World seed. Same seed produces identical output.</param>
+      </inputs>
+      <output>PackedFloat32Array with 32×32 = 1024 height values (0.0-1.0)</output>
+      <path>src/core/world/terrain_generation.gd</path>
+    </interface>
+    <interface>
+      <name>RenderingDevice Compute Pipeline</name>
+      <kind>GPU API</kind>
+      <description>Godot 4.x native GPU compute shader API. RenderingServer provides RenderingDevice instance.</description>
+      <usage>
+        <step>Create RenderingDevice: var rd = RenderingServer.create_local_rendering_device()</step>
+        <step>Load shader: var shader = rd.shader_create_from_spirv(spirv_bytecode)</step>
+        <step>Create pipeline: var pipeline = rd.compute_pipeline_create(shader)</step>
+        <step>Allocate buffers: var input_buffer = rd.storage_buffer_create(size, data)</step>
+        <step>Dispatch compute: rd.compute_list_dispatch(list, x_groups, y_groups, z_groups)</step>
+        <step>Read results: var result = rd.buffer_get_data(output_buffer)</step>
+      </usage>
+      <reference>Godot 4.x RenderingDevice documentation</reference>
+    </interface>
+    <interface>
+      <name>Heightmap Output Format</name>
+      <kind>data format</kind>
+      <description>GPU output: 32×32 texture or buffer of float32 values (0.0-1.0 range)</description>
+      <format>
+        <width>32 pixels</width>
+        <height>32 pixels</height>
+        <channels>1 (R channel only)</channels>
+        <dataType>float32</dataType>
+        <range>0.0 (lowest) to 1.0 (highest)</range>
+        <layout>Row-major: pixel(0,0) at buffer[0], pixel(31,0) at buffer[31], pixel(0,1) at buffer[32], etc.</layout>
+      </format>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      <standard id="determinism">
+        <name>Determinism Testing</name>
+        <framework>GDScript unit tests (custom harness in tests/test_gpu_determinism.gd)</framework>
+        <pattern>Generate same chunk multiple times with same seed. Compare results byte-by-byte. Any difference = test fails.</pattern>
+        <coverage>
+          - Test 1: Single chunk, 3 iterations, pixel-perfect match required
+          - Test 2: 100 chunks with same seed, all identical
+          - Test 3: 10 different seeds, all produce different outputs (verify variation exists)
+          - Test 4: Multi-run (generate chunk, restart engine, generate same chunk) = identical output
+        </coverage>
+      </standard>
+      <standard id="seaming">
+        <name>Chunk Boundary Seaming Verification</name>
+        <framework>Visual + automated comparison</framework>
+        <pattern>Generate adjacent chunks. Extract boundary pixels. Compare pixel-by-pixel.</pattern>
+        <coverage>
+          - Horizontal seaming: chunk(0,0) right edge == chunk(1,0) left edge
+          - Vertical seaming: chunk(0,0) bottom edge == chunk(0,1) top edge
+          - Diagonal seaming: verify corner pixels match consistently
+          - Test 5 different seeds for each seaming test
+        </coverage>
+      </standard>
+      <standard id="performance">
+        <name>Performance Profiling</name>
+        <framework>GDScript OS.get_ticks_msec() for timing</framework>
+        <pattern>Measure generation time for single chunk, 10 chunks, 100 chunks. Compare against target (&lt;100ms per chunk).</pattern>
+        <coverage>
+          - Single chunk generation time
+          - Average per-chunk time (100 chunk run)
+          - GPU to CPU readback time (if needed)
+          - Frame rate impact during generation
+        </coverage>
+      </standard>
+      <standard id="multi-gpu">
+        <name>Multi-GPU Compatibility</name>
+        <framework>Manual testing on available hardware</framework>
+        <pattern>Compile shader on each GPU type. Verify compilation success and deterministic output.</pattern>
+        <coverage>
+          - NVIDIA GPU (any version 750+): compile + execute
+          - AMD GPU (if available): compile + execute
+          - Intel GPU (if available): compile + execute
+          - Log GPU model, driver version, compilation result
+        </coverage>
+      </standard>
+    </standards>
+
+    <locations>
+      <location>tests/test_gpu_determinism.gd</location>
+      <location>tests/test_gpu_performance.gd</location>
+      <location>tests/test_seaming_validation.gd (optional)</location>
+      <location>Console output for performance profiling logs</location>
+      <location>user://saves/test_heightmaps/ (test heightmap data)</location>
+    </locations>
+
+    <ideas>
+      <testIdea id="ac-6">
+        <linkedAC>AC-6: First test chunk generates from seed</linkedAC>
+        <description>Create test that seeds 12345, generates chunk (0,0), compares output to hardcoded expected heightmap.</description>
+        <approach>Store expected heightmap as text file or inline constant. Generate chunk, compare. If match, AC-6 passes.</approach>
+        <tool>test_gpu_determinism.gd test_ac_6_seed_12345()</tool>
+      </testIdea>
+      <testIdea id="ac-8">
+        <linkedAC>AC-8: Adjacent chunks share identical boundary pixels</linkedAC>
+        <description>Generate chunks (0,0) and (1,0). Extract boundary rows and compare pixel-by-pixel.</description>
+        <approach>Extract right edge of (0,0): heightmap[i * 32 + 31] for i in range(32). Extract left edge of (1,0): heightmap[i * 32] for i in range(32). Compare using PackedFloat32Array equality or element-by-element check.</approach>
+        <tool>test_seaming_validation.gd test_horizontal_seaming()</tool>
+      </testIdea>
+      <testIdea id="ac-10">
+        <linkedAC>AC-10: Performance measurement: chunk generation &lt;100ms</linkedAC>
+        <description>Measure time for 100 chunk generations. Log each duration. Calculate average. Compare to target.</description>
+        <approach>Use OS.get_ticks_msec() before and after generate_heightmap(). Store results in array. Calculate mean, min, max. Assert mean &lt; 100ms.</approach>
+        <tool>test_gpu_performance.gd test_performance_100_chunks()</tool>
+      </testIdea>
+      <testIdea id="ac-14">
+        <linkedAC>AC-14: GPU heightmap outputs correctly to texture readable by CPU</linkedAC>
+        <description>Generate heightmap, verify it's readable, verify all values in 0.0-1.0 range, verify no NaN/Inf.</description>
+        <approach>Generate heightmap. Check array length == 1024. Check all values &gt;= 0.0 and &lt;= 1.0. Check no is_nan() or is_inf() values.</approach>
+        <tool>test_gpu_determinism.gd test_heightmap_validity()</tool>
+      </testIdea>
+    </ideas>
+  </tests>
+
+</story-context>

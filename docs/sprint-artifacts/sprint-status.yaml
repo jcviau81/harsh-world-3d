@@ -42,8 +42,8 @@ development_status:
   epic-1-retrospective: optional
 
   # EPIC 2: Procedural World Generation (4 stories)
-  epic-2: backlog
-  2-1-biome-system: backlog
+  epic-2: in-progress
+  2-1-biome-system: review
   2-2-water-system: backlog
   2-3-exploration-navigation: backlog
   2-4-seasonal-system: backlog

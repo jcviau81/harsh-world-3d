@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="BiomeDefinition"]
+
+script = SubResource("GDScript_1")
+biome_id = "grasslands"
+display_name = "Grasslands"
+description = "Open plains with sparse trees and abundant grazing animals"
+base_temperature = 1.0
+difficulty_tier = "easy"
+terrain_types = ["tall_grass", "short_grass", "scattered_trees"]
+terrain_speed_multipliers = {
+	"tall_grass": 0.9,
+	"short_grass": 1.1,
+	"scattered_trees": 1.0
+}
+spawn_rates = {
+	"oak_tree": 0.1,
+	"pine_tree": 0.08,
+	"grass": 0.4,
+	"wildflower": 0.2,
+	"rock": 0.12,
+	"bison": 0.1
+}
+forage_items = ["grains", "wildflowers", "roots", "seeds", "berries"]
+huntable_animals = ["bison", "deer", "bird"]
+ambient_sound = "res://assets/sounds/ambient/wind_grass.ogg"
+primary_color = Color.YELLOW
+tree_sprite_prefix = "tree_sparse"
+water_sprite = "water_lake_blue"
+seasonal_variations = {
+	"spring": {"spawn_modifier": 1.3, "visual_variant": "spring_growth"},
+	"summer": {"spawn_modifier": 1.2, "visual_variant": "summer_green"},
+	"fall": {"spawn_modifier": 0.9, "visual_variant": "fall_golden"},
+	"winter": {"spawn_modifier": 0.4, "visual_variant": "winter_brown"}
+}

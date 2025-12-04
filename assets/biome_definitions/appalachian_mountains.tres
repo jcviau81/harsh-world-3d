@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="BiomeDefinition"]
+
+script = SubResource("GDScript_1")
+biome_id = "appalachian_mountains"
+display_name = "Appalachian Mountains"
+description = "Rocky peaks with hardy evergreens and rare mountain herbs"
+base_temperature = -5.0
+difficulty_tier = "hard"
+terrain_types = ["rocky_peak", "mountain_forest", "alpine_meadow"]
+terrain_speed_multipliers = {
+	"rocky_peak": 0.5,
+	"mountain_forest": 0.7,
+	"alpine_meadow": 0.8
+}
+spawn_rates = {
+	"pine_tree": 0.25,
+	"spruce_tree": 0.2,
+	"rock": 0.3,
+	"rare_herb": 0.15,
+	"lichen": 0.1
+}
+forage_items = ["rare_herbs", "lichen", "mountain_berries", "roots", "pine_nuts"]
+huntable_animals = ["mountain_goat", "eagle", "rabbit"]
+ambient_sound = "res://assets/sounds/ambient/mountain_wind.ogg"
+primary_color = Color(0.5, 0.5, 0.5)
+tree_sprite_prefix = "tree_mountain"
+water_sprite = "water_mountain_stream"
+seasonal_variations = {
+	"spring": {"spawn_modifier": 0.8, "visual_variant": "spring_snow_melt"},
+	"summer": {"spawn_modifier": 1.0, "visual_variant": "summer_clear"},
+	"fall": {"spawn_modifier": 0.7, "visual_variant": "fall_wind"},
+	"winter": {"spawn_modifier": 0.1, "visual_variant": "winter_snowy"}
+}
