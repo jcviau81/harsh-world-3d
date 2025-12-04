@@ -100,7 +100,7 @@ func _create_pipeline() -> bool:
 # PUBLIC API
 # ============================================
 
-func generate_heightmap(chunk_x: int, chunk_y: int, seed: int) -> PackedFloat32Array:
+func generate_heightmap(chunk_x: int, chunk_y: int, _world_seed: int) -> PackedFloat32Array:
 	"""
 	Generate a single 32x32 heightmap for the given chunk.
 

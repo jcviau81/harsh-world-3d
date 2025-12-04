@@ -62,7 +62,7 @@ func set_player(p_player: Node3D) -> void:
 	player = p_player
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	"""Process frame: update streaming and check pending threads."""
 	if not player or not terrain_generator:
 		return

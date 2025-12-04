@@ -27,13 +27,13 @@ static func snap_to_grid(world_position: Vector3, grid_size: int = 1) -> Vector3
 		push_error("GridHelper: grid_size must be > 0")
 		return world_position
 
-	var snapped = Vector3(
+	var is_snapped = Vector3(
 		round(world_position.x / grid_size) * grid_size,
 		world_position.y,  # Don't snap Y (height is continuous)
 		round(world_position.z / grid_size) * grid_size
 	)
 
-	return snapped
+	return is_snapped
 
 
 static func world_to_grid(world_position: Vector3, grid_size: int = 1) -> Vector2i:

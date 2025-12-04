@@ -18,7 +18,7 @@ static func get_difficulty_tier(biome_id: String) -> String:
 
 ## Apply biome movement speed modifier to player
 ## Call this in Player._process() when moving
-static func apply_movement_modifier(player: Node, biome_id: String, terrain_type: String) -> float:
+static func apply_movement_modifier(_player: Node, biome_id: String, terrain_type: String) -> float:
 	var modifier = get_movement_speed_modifier(biome_id, terrain_type)
 	return modifier
 

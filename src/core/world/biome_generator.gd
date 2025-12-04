@@ -165,7 +165,7 @@ func get_biome_info(biome_id: String) -> String:
 
 ## Validate determinism by testing same inputs produce same output
 func validate_determinism(world_seed: int, test_count: int = 10) -> bool:
-	var results: Dictionary = {}
+	var _results: Dictionary = {}
 
 	for i in range(test_count):
 		var chunk_x = randi() % 100
