@@ -292,6 +292,14 @@ static func _ensure_initialized() -> void:
 	if not _initialized:
 		initialize()
 
+## Get all biome IDs
+static func get_all_biomes() -> Array[String]:
+	_ensure_initialized()
+	var biome_ids: Array[String] = []
+	for biome_id in _biomes.keys():
+		biome_ids.append(biome_id)
+	return biome_ids
+
 ## Get raw biome definition resource
 static func get_biome_definition(biome_type: String) -> BiomeDefinition:
 	_ensure_initialized()

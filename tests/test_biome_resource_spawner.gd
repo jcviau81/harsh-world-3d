@@ -150,8 +150,8 @@ func test_biome_variation() -> void:
 	"""AC-22: Different biomes produce different distributions"""
 
 	var forest = BiomeResourceSpawner.spawn_resources_for_chunk(0, 0, 12345, "temperate_forest")
-	var coastal = BiomeResourceSpawner.spawn_resources_for_chunk(0, 0, 12345, "coastal_beach")
-	var mountain = BiomeResourceSpawner.spawn_resources_for_chunk(0, 0, 12345, "mountain_range")
+	var coastal = BiomeResourceSpawner.spawn_resources_for_chunk(0, 0, 12345, "coastal_atlantic")
+	var mountain = BiomeResourceSpawner.spawn_resources_for_chunk(0, 0, 12345, "appalachian_mountains")
 
 	# Count trees in each biome
 	var forest_trees = 0
@@ -239,7 +239,7 @@ func test_resource_node_type_distribution() -> void:
 	"""AC-24: Resource nodes distribute by biome type"""
 
 	var forest_nodes = BiomeResourceSpawner.spawn_resources_for_chunk(0, 0, 12345, "temperate_forest")
-	var coastal_nodes = BiomeResourceSpawner.spawn_resources_for_chunk(0, 0, 12345, "coastal_beach")
+	var coastal_nodes = BiomeResourceSpawner.spawn_resources_for_chunk(0, 0, 12345, "coastal_atlantic")
 
 	# Count resource nodes
 	var forest_resources = 0
@@ -274,7 +274,7 @@ func test_all_biomes_spawn() -> void:
 	"""AC-21/22: All biome types can spawn objects"""
 
 	var all_biomes = BiomeDefinitions.get_all_biomes()
-	assert(all_biomes.size() == 4, "Should have 4 biome types")
+	assert(all_biomes.size() == 7, "Should have 7 biome types")
 
 	for biome in all_biomes:
 		var objects = BiomeResourceSpawner.spawn_resources_for_chunk(0, 0, 12345, biome)
