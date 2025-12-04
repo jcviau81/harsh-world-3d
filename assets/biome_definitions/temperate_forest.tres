@@ -1,34 +1,18 @@
 [gd_resource type="Resource" script_class="BiomeDefinition"]
 
-script = SubResource("GDScript_1")
+script = "res://assets/biome_definitions/biome_data.gd"
 biome_id = "temperate_forest"
 display_name = "Temperate Forest"
 description = "Mixed deciduous and coniferous forest with abundant wildlife"
 base_temperature = 0.0
 difficulty_tier = "easy"
-terrain_types = ["dense_forest", "sparse_forest", "clearing"]
-terrain_speed_multipliers = {
-	"dense_forest": 0.7,
-	"sparse_forest": 0.9,
-	"clearing": 1.1
-}
-spawn_rates = {
-	"maple_tree": 0.25,
-	"oak_tree": 0.25,
-	"pine_tree": 0.15,
-	"mushroom": 0.15,
-	"berry_bush": 0.2,
-	"rock": 0.08
-}
-forage_items = ["berries", "mushrooms", "roots", "seeds", "nuts", "herbs"]
-huntable_animals = ["deer", "rabbit", "bird"]
+terrain_types = PackedStringArray("dense_forest", "sparse_forest", "clearing")
+terrain_speed_multipliers = {"dense_forest": 0.8, "sparse_forest": 1.0, "clearing": 1.2}
+spawn_rates = {"maple_tree": 0.3, "oak_tree": 0.25, "mushroom": 0.15, "berry_bush": 0.2, "rock": 0.1}
+forage_items = PackedStringArray("berries", "mushrooms", "roots", "seeds", "nuts", "herbs")
+huntable_animals = PackedStringArray("deer", "rabbit", "bird")
 ambient_sound = "res://assets/sounds/ambient/forest_birds.ogg"
-primary_color = Color.GREEN
-tree_sprite_prefix = "tree_temperate"
+primary_color = Color(0, 0.5, 0, 1)
+tree_sprite_prefix = "tree_oak"
 water_sprite = "water_river_brown"
-seasonal_variations = {
-	"spring": {"spawn_modifier": 1.5, "visual_variant": "spring_leaves"},
-	"summer": {"spawn_modifier": 1.5, "visual_variant": "summer_green"},
-	"fall": {"spawn_modifier": 0.8, "visual_variant": "fall_leaves"},
-	"winter": {"spawn_modifier": 0.3, "visual_variant": "winter_bare"}
-}
+seasonal_variations = {"spring": {"spawn_modifier": 1.5, "visual_variant": "spring_budding"}, "summer": {"spawn_modifier": 1.5, "visual_variant": "summer_green"}, "fall": {"spawn_modifier": 0.8, "visual_variant": "fall_golden"}, "winter": {"spawn_modifier": 0.2, "visual_variant": "winter_bare"}}

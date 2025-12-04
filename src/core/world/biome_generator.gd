@@ -9,8 +9,7 @@ extends Node
 @export var noise_scale: float = 0.1  # Large scale for broad biome zones
 @export var elevation_influence: float = 0.5  # Balance between noise and elevation
 
-## Reference to biome definitions
-var biome_definitions: Dictionary = {}
+## Biome list for generation
 var biome_list: Array[String] = [
 	"coastal_atlantic",
 	"temperate_forest",
@@ -21,14 +20,10 @@ var biome_list: Array[String] = [
 	"wetlands"
 ]
 
-## Preload all biome definitions
+## Initialize biome generator
 func _ready() -> void:
-	for biome_id in biome_list:
-		var path = "res://assets/biome_definitions/%s.tres" % biome_id
-		if ResourceLoader.exists(path):
-			biome_definitions[biome_id] = ResourceLoader.load(path)
-		else:
-			push_error("Failed to load biome definition: %s" % biome_id)
+	# Biome definitions are now created programmatically in BiomeDefinitions
+	pass
 
 ## Main biome assignment function - deterministic per chunk
 ## Returns biome_id string (e.g., "temperate_forest")
@@ -55,11 +50,11 @@ func assign_biome_for_chunk(heightmap: PackedFloat32Array, chunk_x: int, chunk_y
 
 ## Assign terrain type within a biome based on local height variation
 func get_terrain_type_for_tile(biome_id: String, local_height: float) -> String:
-	if not biome_id in biome_definitions:
+	if not BiomeDefinitions.is_valid_biome(biome_id):
 		return "default"
 
-	var biome = biome_definitions[biome_id]
-	if biome.terrain_types.is_empty():
+	var biome = BiomeDefinitions.get_biome_definition(biome_id)
+	if not biome or biome.terrain_types.is_empty():
 		return "default"
 
 	# Select terrain type based on height within the biome
@@ -124,9 +119,7 @@ func get_terrain_type_for_tile(biome_id: String, local_height: float) -> String:
 
 ## Get movement speed modifier for terrain type
 func get_speed_modifier(biome_id: String, terrain_type: String) -> float:
-	if biome_id in biome_definitions:
-		return biome_definitions[biome_id].get_speed_multiplier(terrain_type)
-	return 1.0
+	return BiomeDefinitions.get_speed_multiplier(biome_id, terrain_type)
 
 ## Internal: Select biome based on combined noise + elevation
 ## Noise ranges from -1 to 1, elevation from 0 to 1
@@ -161,10 +154,7 @@ func _select_biome_from_noise_and_elevation(noise_value: float, elevation: float
 
 ## Get biome definition resource
 func get_biome_definition(biome_id: String) -> BiomeDefinition:
-	if biome_id in biome_definitions:
-		return biome_definitions[biome_id]
-	push_error("Biome definition not found: %s" % biome_id)
-	return null
+	return BiomeDefinitions.get_biome_definition(biome_id)
 
 ## Get info about biome for debugging
 func get_biome_info(biome_id: String) -> String:

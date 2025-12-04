@@ -1,33 +1,18 @@
 [gd_resource type="Resource" script_class="BiomeDefinition"]
 
-script = SubResource("GDScript_1")
+script = "res://assets/biome_definitions/biome_data.gd"
 biome_id = "deciduous_forest"
 display_name = "Deciduous Forest"
-description = "Dense birch and aspen forest with rich undergrowth"
+description = "Forests dominated by trees that lose leaves seasonally"
 base_temperature = -1.0
 difficulty_tier = "easy"
-terrain_types = ["dense_birch", "aspen_grove", "understory"]
-terrain_speed_multipliers = {
-	"dense_birch": 0.75,
-	"aspen_grove": 0.85,
-	"understory": 0.6
-}
-spawn_rates = {
-	"birch_tree": 0.3,
-	"aspen_tree": 0.25,
-	"mushroom": 0.2,
-	"berry_bush": 0.15,
-	"rock": 0.1
-}
-forage_items = ["mushrooms", "berries", "bark", "leaves", "herbs", "nuts"]
-huntable_animals = ["rabbit", "moose", "bird"]
-ambient_sound = "res://assets/sounds/ambient/forest_quiet.ogg"
-primary_color = Color(0.8, 0.6, 0.2)
-tree_sprite_prefix = "tree_deciduous"
-water_sprite = "water_stream_blue"
-seasonal_variations = {
-	"spring": {"spawn_modifier": 1.4, "visual_variant": "spring_budding"},
-	"summer": {"spawn_modifier": 1.3, "visual_variant": "summer_lush"},
-	"fall": {"spawn_modifier": 1.0, "visual_variant": "fall_golden"},
-	"winter": {"spawn_modifier": 0.2, "visual_variant": "winter_snow"}
-}
+terrain_types = PackedStringArray("dense_forest", "forest_floor", "clearing")
+terrain_speed_multipliers = {"dense_forest": 0.75, "forest_floor": 1.0, "clearing": 1.2}
+spawn_rates = {"oak_tree": 0.35, "beech_tree": 0.25, "mushroom": 0.2, "berry_bush": 0.15, "rock": 0.05}
+forage_items = PackedStringArray("acorns", "mushrooms", "roots", "seeds", "nuts", "herbs")
+huntable_animals = PackedStringArray("deer", "boar", "bird")
+ambient_sound = "res://assets/sounds/ambient/forest_wind.ogg"
+primary_color = Color(0.2, 0.6, 0.2, 1)
+tree_sprite_prefix = "tree_oak"
+water_sprite = "water_creek_brown"
+seasonal_variations = {"spring": {"spawn_modifier": 1.4, "visual_variant": "spring_new_leaves"}, "summer": {"spawn_modifier": 1.4, "visual_variant": "summer_lush"}, "fall": {"spawn_modifier": 0.9, "visual_variant": "fall_colorful"}, "winter": {"spawn_modifier": 0.3, "visual_variant": "winter_bare"}}
